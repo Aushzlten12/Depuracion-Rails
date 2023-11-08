@@ -4,6 +4,7 @@ class MoviesController < ApplicationController
   # GET /movies or /movies.json
   def index
     @movies = Movie.all
+    binding.pry
   end
 
   # GET /movies/1 or /movies/1.json
@@ -24,9 +25,11 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.new(movie_params)
 
+    # raise params.inspect
     respond_to do |format|
       if @movie.save
         format.html { redirect_to movie_url(@movie), notice: "Movie was successfully created." }
+        logger.debug("the movie has been saved perfectly")
         format.json { render :show, status: :created, location: @movie }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,6 +40,7 @@ class MoviesController < ApplicationController
 
   # PATCH/PUT /movies/1 or /movies/1.json
   def update
+    raise params.inspect
     respond_to do |format|
       if @movie.update(movie_params)
         format.html { redirect_to movie_url(@movie), notice: "Movie was successfully updated." }
